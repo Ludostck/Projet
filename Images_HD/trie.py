@@ -36,6 +36,10 @@ class ImageEditor:
 
         self.load_next_image()
 
+        # Bind arrow keys to actions
+        self.master.bind("<Left>", lambda event: self.delete_image())
+        self.master.bind("<Right>", lambda event: self.keep_image())
+
     def load_next_image(self):
         while self.images:
             image_file = self.images.pop(0)
@@ -129,5 +133,5 @@ class ImageEditor:
 
 if __name__ == "__main__":
     root = Tk()
-    app = ImageEditor(root, 'Nébuleuses')  # Replace 'Nébuleuses' with your actual folder path
+    app = ImageEditor(root, 'C:/Users/Eliott/Desktop/Projet-main/Images_HD/Galaxie')  # Replace 'Nébuleuses' with your actual folder path
     root.mainloop()
