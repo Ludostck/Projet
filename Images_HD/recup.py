@@ -5,8 +5,8 @@ from tqdm import tqdm  # Importation de la bibliothèque tqdm
 import time  # Pour mesurer le temps d'exécution
 
 # Configuration initiale
-folder_name = 'Galaxie'
-max_images = 1500  # Le nombre total d'images à télécharger
+folder_name = 'Lunes'
+max_images = 2500  # Le nombre total d'images à télécharger
 images_downloaded = 0  # Compteur du nombre d'images téléchargées
 
 # Créer un dossier pour sauvegarder les images
@@ -16,7 +16,7 @@ if not os.path.exists(folder_name):
 
 # Définir la session et les autres paramètres
 session = requests.Session()  # Utiliser une session pour maintenir les cookies et la connexion
-topic = "Galaxy"
+topic = "Moon"
 
 # Fonction pour convertir les secondes en hh:mm:ss
 def format_time(seconds):
@@ -24,10 +24,10 @@ def format_time(seconds):
 
 # Pour la barre de progression et le suivi du temps
 start_time = time.time()
-images_to_download = min(max_images, 2500)  # Changez 2500 si vous savez combien d'images il y a au total
+images_to_download = max_images  
 
 # Initialisez la barre de progression
-pbar = tqdm(total=images_to_download, unit="img", ncols=100)
+pbar = tqdm(total=images_to_download, unit="img", ncols=200)
 
 def scrape_and_download_image(detail_page_url, session, folder_name):
     global start_time
@@ -56,12 +56,12 @@ def scrape_and_download_image(detail_page_url, session, folder_name):
                 images_downloaded += 1
                  # Mettre à jour la barre de progression toutes les 5 images
                 
-                if images_downloaded % 5 == 0:
-                     elapsed_time = time.time() - start_time
-                     estimated_total_time = elapsed_time / images_downloaded * images_to_download if images_downloaded > 0 else float('inf')
-                     remaining_time = estimated_total_time - elapsed_time
-                     pbar.set_description(f"Temps restant estimé: {format_time(remaining_time)}")
-                     pbar.update(5)  # Mettre à jour d'une image à la fois
+               
+                elapsed_time = time.time() - start_time
+                estimated_total_time = elapsed_time / images_downloaded * images_to_download if images_downloaded > 0 else float('inf')
+                remaining_time = estimated_total_time - elapsed_time
+                pbar.set_description(f"Temps restant estimé: {format_time(remaining_time)}")
+                pbar.update(1)  # Mettre à jour d'une image à la fois
                         
 
      
@@ -92,7 +92,7 @@ def scrape_page(url, session):
 
 
 try:
-    page = 100
+    page = 1
     while images_downloaded < images_to_download:
         url = f"https://www.astrobin.com/search/?q={topic}&d=i&t=all&date_published_min=2011-11-09&date_published_max=2024-02-09&page={page}"
         scrape_page(url, session)
@@ -101,7 +101,7 @@ try:
         if images_downloaded >= max_images:
             print("\nNombre maximal d'images téléchargées atteint.")
             break
-        # Petite pause pour ne pas surcharger le serveur
+        
         
 
 finally:
