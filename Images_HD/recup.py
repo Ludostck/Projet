@@ -45,7 +45,7 @@ def scrape_and_download_image(detail_page_url, session, folder_name):
             img_url = img_url_tag['content']  # Extrayez l'URL de l'image
            
             # Générer le nom de fichier et le chemin complet
-            img_name = img_url.split('/')[3] + ".png"# Extrayez le nom de fichier de l'URL
+            img_name = img_url.split('/')[3] + ".jpg"# Extrayez le nom de fichier de l'URL
           
             full_path = os.path.join(folder_name, img_name)
 

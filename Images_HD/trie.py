@@ -62,9 +62,21 @@ class ImageEditor:
 
     def display_image(self, image):
         self.canvas.delete("all")  # Clear the canvas
-        self.tk_image = ImageTk.PhotoImage(image)
+
+        # Max size for the displayed image
+        max_width, max_height = 800, 600  # Change these values as needed
+
+        # Resize image to fit within max dimensions while maintaining aspect ratio
+        aspect_ratio = min(max_width / image.width, max_height / image.height)
+        new_width = int(image.width * aspect_ratio)
+        new_height = int(image.height * aspect_ratio)
+        resized_image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+
+        # Update the Tk image and canvas size
+        self.tk_image = ImageTk.PhotoImage(resized_image)
         self.canvas.create_image(20, 20, anchor="nw", image=self.tk_image)
-        self.canvas.config(width=self.tk_image.width(), height=self.tk_image.height())
+        self.canvas.config(width=new_width, height=new_height)
+
 
     def delete_image(self):
         self.move_image("Supprimé")
