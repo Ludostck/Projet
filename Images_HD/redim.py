@@ -46,6 +46,6 @@ def resize_and_compress_images_in_folder(folder_path, size=(600, 600), quality=9
                 print(f"Error processing image {file_path}: {e}")
 
 # Remplacer 'your_folder_path' par le chemin du dossier contenant vos images
-folder_path = 'Comètes'  # Remplacer par le chemin de votre dossier
+folder_path = 'Galaxie'  # Remplacer par le chemin de votre dossier
 resize_and_compress_images_in_folder(folder_path)
 
