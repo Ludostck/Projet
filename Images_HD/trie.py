@@ -85,6 +85,6 @@ class ImageEditor:
 
 if __name__ == "__main__":
     root = Tk()
-    app = ImageEditor(root, 'Amas')  # Replace 'Nébuleuses' with your actual folder path
+    app = ImageEditor(root, 'Amas')  #
     root.mainloop()
 
