@@ -16,21 +16,17 @@ class ImageEditor:
         self.canvas = Canvas(self.master, cursor="cross")
         self.canvas.pack()
 
-        # Display number of images left
         self.status_frame = Frame(self.master)
         self.status_frame.pack(side='top', pady=5)
         self.images_left_label = Label(self.status_frame, text=f"Images restantes: {len(self.images)}")
         self.images_left_label.pack()
 
-        # Buttons frame
         self.buttons_frame = Frame(self.master)
         self.buttons_frame.pack(side='bottom', pady=10)
 
-        # Control buttons
         Button(self.buttons_frame, text="Supprimer", command=self.delete_image, height=2, width=15).pack(side='left', padx=5)
         Button(self.buttons_frame, text="Garder", command=self.keep_image, height=2, width=15).pack(side='left', padx=5)
 
-        # Bind keyboard events
         self.master.bind('<Left>', lambda event: self.delete_image())
         self.master.bind('<Right>', lambda event: self.keep_image())
 
@@ -43,28 +39,23 @@ class ImageEditor:
             try:
                 self.current_image = Image.open(self.current_image_path)
                 self.display_image(self.current_image)
-                # Update the label for the number of images left
                 self.images_left_label.config(text=f"Images restantes: {len(self.images)}")
             except (IOError, UnidentifiedImageError) as e:
                 print(f"Error opening {self.current_image_path}: {e}")
-                self.load_next_image()  # Try the next image if current one fails to load
+                self.load_next_image()  
         else:
-            # No more images to display, exit the program
             self.master.quit()
 
     def display_image(self, image):
-        self.canvas.delete("all")  # Clear the canvas
+        self.canvas.delete("all")  
 
-        # Max size for the displayed image
         max_width, max_height = 800, 600
 
-        # Resize image to fit within max dimensions while maintaining aspect ratio
         aspect_ratio = min(max_width / image.width, max_height / image.height)
         new_width = int(image.width * aspect_ratio)
         new_height = int(image.height * aspect_ratio)
         resized_image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
-        # Update the Tk image and canvas size
         self.tk_image = ImageTk.PhotoImage(resized_image)
         self.canvas.create_image(20, 20, anchor="nw", image=self.tk_image)
         self.canvas.config(width=new_width, height=new_height)
@@ -85,6 +76,6 @@ class ImageEditor:
 
 if __name__ == "__main__":
     root = Tk()
-    app = ImageEditor(root, 'Amas')  #
+    app = ImageEditor(root, 'Comètes')  #
     root.mainloop()
 
