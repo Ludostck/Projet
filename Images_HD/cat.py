@@ -28,5 +28,5 @@ def split_dataset_into_train_validation_test(src_folder, train_size=0.85, valida
 
     print("Les fichiers ont été divisés en entraînement, validation, et test avec succès.")
 
-split_dataset_into_train_validation_test('astrobin_nebulae_images')
+split_dataset_into_train_validation_test('Comètes')
 

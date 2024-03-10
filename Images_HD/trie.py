@@ -76,6 +76,6 @@ class ImageEditor:
 
 if __name__ == "__main__":
     root = Tk()
-    app = ImageEditor(root, 'Comètes')  #
+    app = ImageEditor(root, 'Lunes')  #
     root.mainloop()
 
