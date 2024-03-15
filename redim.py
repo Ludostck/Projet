@@ -27,6 +27,6 @@ def resize_and_compress_images_in_folder(folder_path, size=(600, 600), quality=9
             except Exception as e:
                 print(f"Error processing image {file_path}: {e}")
 
-folder_path = 'Lunes' 
+folder_path = 'Nébuleuse_2' 
 resize_and_compress_images_in_folder(folder_path)
 

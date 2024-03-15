@@ -4,8 +4,8 @@ import os
 from tqdm import tqdm 
 import time  
 
-folder_name = 'Lunes'
-max_images = 1500  # Le nombre total d'images à télécharger
+folder_name = 'Amas_2'
+max_images = 5000  # Le nombre total d'images à télécharger
 images_downloaded = 0  # Compteur du nombre d'images téléchargées
 
 if not os.path.exists(folder_name):
@@ -13,7 +13,7 @@ if not os.path.exists(folder_name):
     print(f"Dossier '{folder_name}' créé.")
 
 session = requests.Session()  
-topic = "Moon"
+topic = "Abell"
 
 def format_time(seconds):
     return time.strftime('%H:%M:%S', time.gmtime(seconds))
