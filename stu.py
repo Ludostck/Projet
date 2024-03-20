@@ -1,38 +1,30 @@
-
 import os
 import shutil
+from glob import glob
+import math
 
-original_base = 'Images_HD'
-new_base = 'Images'
+# Définir les pourcentages pour les dossiers Train, Validation et Test
+pourcentages = {'Train': 0.8, 'Validation': 0.15, 'Test': 0.05}
 
-categories = ['train', 'validation', 'test']
+# Définir les dossiers originaux
+dossiers_originaux = ['Galaxie', 'Nébuleuse', 'Comète', 'Ama', 'Lune']
+dossier_principal = 'Images'
 
-for category in categories:
-    new_category_path = os.path.join(new_base, category)
-    if not os.path.exists(new_category_path):
-        os.makedirs(new_category_path)
+# Créer les nouveaux dossiers pour chaque catégorie et sous-dossier
+for cat in pourcentages:
+    for dossier in dossiers_originaux:
+        chemin_nouveau_dossier = os.path.join(dossier_principal, cat, dossier)
+        os.makedirs(chemin_nouveau_dossier, exist_ok=True)
 
-for folder in os.listdir(original_base):
-    original_folder_path = os.path.join(original_base, folder)
+# Distribuer les images dans les nouveaux dossiers
+for dossier in dossiers_originaux:
+    chemin_dossier_orig = os.path.join(dossier_principal, dossier)
+    images = glob(f'{chemin_dossier_orig}/*.jpg')  # Assurez-vous que ce sont des fichiers .jpg
+    total_images = len(images)
 
-    if not os.path.isdir(original_folder_path):
-        continue
-
-    for category in categories:
-        original_category_path = os.path.join(original_folder_path, category)
-
-        if not os.path.exists(original_category_path):
-            continue
-
-        new_folder_path = os.path.join(new_base, category, folder)
-
-        if not os.path.exists(new_folder_path):
-            os.makedirs(new_folder_path)
-
-        for filename in os.listdir(original_category_path):
-            src_file = os.path.join(original_category_path, filename)
-            dest_file = os.path.join(new_folder_path, filename)
-            if os.path.isfile(src_file):  
-                shutil.copy(src_file, dest_file)
-
-
+    for cat, pourcentage in pourcentages.items():
+        nb_images = math.ceil(total_images * pourcentage)
+        for image in images[:nb_images]:
+            shutil.move(image, os.path.join(dossier_principal, cat, dossier))
+        # Mettre à jour la liste des images restantes
+        images = images[nb_images:]
