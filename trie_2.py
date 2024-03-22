@@ -5,17 +5,13 @@ import numpy as np
 from PIL import UnidentifiedImageError,Image
 
 # Charger le modèle pré-entraîné
-model = load_model('Projet.keras')
+modele_charge = load_model('meilleur_modele_2.h5')
 
 # Dossier contenant les images à classifier
-image_folder = 'Amas_2'
-CLASSES = ['Galaxie', 'Nébuleuses', 'Comètes','Amas','Lunes']
-# Dossier pour sauvegarder les images classifiées comme Nébuleuse
-save_folder = 'Am_att'
+image_folder = 'Neb_gen'
+IMAGE_SIZE = 225
+CLASSES = ['Galaxie', 'Nébuleuse', 'Comète','Lune',"Saturne"]
 
-IMAGE_SIZE = 128
-if not os.path.exists(save_folder):
-    os.makedirs(save_folder)
 
 # Parcourir toutes les images dans le dossier
 for image_name in os.listdir(image_folder):
@@ -29,17 +25,14 @@ for image_name in os.listdir(image_folder):
         img_array = np.array(img2) / 255.0  # Normalisation
         img_array = img_array.reshape((1, IMAGE_SIZE, IMAGE_SIZE, 3))  # Ajout de la dimension du batch
             # Prédiction
-        predictions = model.predict(img_array)
+        predictions = modele_charge.predict(img_array)
         predicted_class = CLASSES[np.argmax(predictions)]  # Remplacer CLASSES par vos classes réelles
         prob = np.max(predictions)
         # Vérifier si l'image est classifiée comme Nébuleuse avec proba >= 0.95
-        if predicted_class== "Amas" and prob >= 0.95:
-            # Sauvegarder l'image dans le nouveau dossier
-            img = img.resize((600, 600), Image.Resampling.LANCZOS)
-            save_path = os.path.join(save_folder, image_name)
-            img.save(save_path)
-            
-
+        if predicted_class== "Nébuleuse" and prob >= 0.90:
+            print("ok")
+        else : 
+            os.remove(image_path) 
             
         
     except UnidentifiedImageError:
@@ -47,5 +40,6 @@ for image_name in os.listdir(image_folder):
         os.remove(image_path)
     except Exception as e:
         print(f"Erreur inattendue avec l'image {image_name}: {e}")
+        os.remove(image_path)
 
 print("Classification et nettoyage terminés.")
