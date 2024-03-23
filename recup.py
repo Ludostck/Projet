@@ -6,7 +6,7 @@ from tqdm import tqdm
 import time
 
 # Paramètres
-folder_name = 'Neb_gen'
+folder_name = 'Moon_gen'
 max_images = 10000  # Le nombre total d'images à télécharger
 images_downloaded = 0  # Compteur du nombre d'images téléchargées
 resize_size = (600, 600)  # Nouvelle taille pour le redimensionnement
@@ -80,9 +80,9 @@ def scrape_page(url, session):
             scrape_and_download_image(detail_page_url, session, folder_name)
 
 try:
-    page = 400
+    page = 402
     while images_downloaded < images_to_download:
-        url = f"https://www.astrobin.com/search/?q={topic}&d=i&t=all&date_published_min=2011-11-09&date_published_max=2024-02-09&page={page}"
+        url = f"https://www.astrobin.com/search/?q=&d=i&subject=&telescope=&camera=&date_published_min=2011-11-09&date_published_max=2024-02-09&subject_type=MOON&sort=&page={page}"
         scrape_page(url, session)
         page += 1
         print(f"Pages : {page}", end='\r')
